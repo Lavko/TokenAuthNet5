@@ -35,6 +35,25 @@ public class UserController : ControllerBase
         }
         return Ok(resultDto);
     }
+    
+    [AllowAnonymous]
+    [HttpPost("social-login")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
+    public async Task<IActionResult> SocialLogin([FromBody] SocialLoginRequest request)
+    {
+        var result = await _authenticationService.SocialLogin(request);
+
+        var resultDto = result.ToResultDto();
+
+        if (!resultDto.IsSuccess)
+        {
+            return BadRequest(resultDto);
+        }
+        return Ok(resultDto);
+    }
 
     [AllowAnonymous]
     [HttpPost("register")]

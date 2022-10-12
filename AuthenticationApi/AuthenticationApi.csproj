@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentResults" Version="3.10.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

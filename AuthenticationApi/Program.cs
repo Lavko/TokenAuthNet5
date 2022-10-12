@@ -13,12 +13,13 @@ var configuration = builder.Configuration;
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("db")));
 
-// 1. Add support for roles
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddRoles<IdentityRole>()
     .AddRoleManager<RoleManager<IdentityRole>>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddHttpClient();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -40,7 +41,6 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-// 2. Add authorization policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ElevatedRights", policy =>
@@ -114,7 +114,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// 3. Add seed
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
